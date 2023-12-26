@@ -1,9 +1,12 @@
 from fastapi import FastAPI
 from typing import Union
 from Clas1 import MiClase     
+from pydantic import BaseModel
 
 app = FastAPI()
 
+class HexDataInput(BaseModel):
+    hex_data: str
 
 @app.get("/")
 def read_root():
@@ -17,15 +20,17 @@ def read_item(item_id: int, q: Union[str, None] = "Hello there"):
     return {"item_id": item_id, "q": salida}
 
 @app.post("/receiveImg/")
-async def convert_to_bytes(hex_data: str):
+async def convert_to_bytes(input_data: HexDataInput):
     # Convertir la data hexadecimal a bytes
+    print("Debuging")
+    hex_data=input_data.hex_data
     try:
         byte_data = bytes.fromhex(hex_data)
     except ValueError as e:
         return {"Error": "Formato hexadecimal inválido"}
     
     # Guardar los bytes en un archivo
-    file_path = "uploads/data_file.bin"
+    file_path = "data_file.bin"
     with open(file_path, "wb") as output_file:
         output_file.write(byte_data)
     
