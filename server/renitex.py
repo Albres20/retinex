@@ -101,13 +101,18 @@ def msrcp(img, sigma_scales=[15, 80, 250], low_per=1, high_per=1):
 
     return msrcp.astype(np.uint8)
 
-# Carga la imagen de entrada *******************************************************************
-input_image = cv2.imread('Prueba.jpg')
+def starConversion(numpyArray):
+    # Carga la imagen de entrada *******************************************************************
+    #input_image = cv2.imread('Prueba.jpg')
+    input_image=np.frombuffer(numpyArray, dtype=np.uint8)
 
-# Asegúrate de que la imagen se cargó correctamente
-if input_image is None:
-    print('Error al cargar la imagen.')
-else:
-  # Continúa con el procesamiento de la
-  # Procesa la imagen utilizando la función msrcp
-  resultado = msrcp(input_image, sigma_scales=[15, 80, 250], low_per=1, high_per=1)
+    # Asegúrate de que la imagen se cargó correctamente
+    if input_image is None:
+        print('Error al cargar la imagen.')
+        return 0
+    else:
+        # Continúa con el procesamiento de la
+        # Procesa la imagen utilizando la función msrcp
+        resultado = msrcp(input_image, sigma_scales=[15, 80, 250], low_per=1, high_per=1)
+
+        return resultado

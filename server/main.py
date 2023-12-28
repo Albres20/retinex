@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from typing import Union
 from Clas1 import MiClase     
+import renitex
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -26,7 +27,11 @@ async def convert_to_bytes(input_data: HexDataInput):
     hex_data=input_data.hex_data
     try:
         byte_data = bytes.fromhex(hex_data)
+        renitex.starConversion(byte_data)
+        print("Good conversion")
+
     except ValueError as e:
+        print("fail")
         return {"Error": "Formato hexadecimal inválido"}
     
     # Guardar los bytes en un archivo
